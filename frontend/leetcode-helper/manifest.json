@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "BigO Buddy",
+  "version": "1.0",
+  "description": "AI-powered LeetCode assistant that helps you solve problems using Google Gemini.",
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://leetcode.com/*",
+    "http://localhost:3000/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://leetcode.com/problems/*"],
+      "js": ["content.js"],
+      "css": ["style.css"]
+    }
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "action": {
+    "default_title": "Open BigO Buddy"
+  }
+}
