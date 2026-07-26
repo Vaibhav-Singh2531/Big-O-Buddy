@@ -38,37 +38,7 @@ function extractAndSendProblem() {
   });
 }
 
-// Inject a script to the main world to access Monaco Editor
-function injectMainWorldScript() {
-  if (document.getElementById('bigo-buddy-injected-script')) return;
-  const script = document.createElement('script');
-  script.id = 'bigo-buddy-injected-script';
-  script.textContent = `
-    window.addEventListener("message", (event) => {
-      if (event.source !== window) return;
-      if (event.data.type === "BIGO_GET_CODE") {
-        if (window.monaco && window.monaco.editor) {
-          const models = window.monaco.editor.getModels();
-          if (models.length > 0) {
-            window.postMessage({ 
-              type: "BIGO_CODE_RESULT", 
-              code: models[0].getValue(), 
-              language: models[0].getLanguageId() 
-            }, "*");
-          }
-        }
-      } else if (event.data.type === "BIGO_SET_CODE") {
-        if (window.monaco && window.monaco.editor) {
-          const models = window.monaco.editor.getModels();
-          if (models.length > 0) {
-            models[0].setValue(event.data.code);
-          }
-        }
-      }
-    });
-  `;
-  document.documentElement.appendChild(script);
-}
+
 
 // Add Debug Print Button next to the format button
 function injectDebugButton() {
@@ -170,7 +140,6 @@ window.addEventListener("message", (event) => {
 
 // Initial check and observer to handle SPA navigation
 setTimeout(makeTitleClickable, 2000);
-injectMainWorldScript();
 
 // Observe DOM changes to re-inject behavior if we navigate to a new problem
 const observer = new MutationObserver((mutations) => {

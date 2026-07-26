@@ -19,6 +19,11 @@
   "content_scripts": [
     {
       "matches": ["https://leetcode.com/problems/*"],
+      "js": ["injected.js"],
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://leetcode.com/problems/*"],
       "js": ["content.js"],
       "css": ["style.css"]
     }
